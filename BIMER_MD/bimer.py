@@ -331,6 +331,7 @@ NavigationLayout:
 
 # Source https://github.com/bAcheron/basic_etl/blob/master/DatabaseManager.py
 
+from kivymd.uix.menu import MDDropdownMenu
 
 class ContentNavigationDrawer(BoxLayout):
     None
@@ -360,6 +361,20 @@ class DrawerList(ThemableBehavior, MDList):
 
 
 class TestNavigationDrawer(MDApp):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        menu_items = [{"icon": "git", "text": f"Item {i}"} for i in range(5)]
+        self.menu = MDDropdownMenu(
+            caller=self.root.screen4.dropdown_item,
+            items=menu_items,
+            position="center",
+            callback=self.set_item,
+            width_mult=4,
+        )
+
+    def set_item(self, instance):
+        self.screen.ids.dropdown_item.set_item(instance.text)        
+
     navdrawer = ObjectProperty(None)
       
     def build(self):
